@@ -2,21 +2,21 @@ package com.mihey.homework.rometoarabic;
 
 import static com.mihey.homework.rometoarabic.RomeToArabicConverter.RomeNumbers.getNumber;
 
-public class RomeToArabicConverter {
-    public static int convertRomeToArabic(String romeNumber) {
+class RomeToArabicConverter {
+    static int convertRomeToArabic(String romeNumber) {
         int result = 0;
         for (int i = romeNumber.length() - 1; i >= 0; i--) {
-            int curr= getNumber(romeNumber.charAt(i));
-            if(i==0){
-                result +=curr;
-                return  result;
+            int curr = getNumber(romeNumber.charAt(i));
+            if (i == 0) {
+                result += curr;
+                return result;
             }
-            int prev = getNumber(romeNumber.charAt(i-1));
+            int prev = getNumber(romeNumber.charAt(i - 1));
             if (curr > prev) {
-                result-=  prev;
+                result -= prev;
                 i--;
             }
-            result+=curr;
+            result += curr;
         }
         return result;
     }
@@ -26,7 +26,7 @@ public class RomeToArabicConverter {
 
         private int value;
 
-        private RomeNumbers(int value) {
+        RomeNumbers(int value) {
             this.value = value;
         }
 
@@ -34,7 +34,7 @@ public class RomeToArabicConverter {
             return value;
         }
 
-        public static int getNumber(char num){
+        public static int getNumber(char num) {
             return RomeNumbers.valueOf(num + "").getValue();
         }
     }

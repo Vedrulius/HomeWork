@@ -2,9 +2,10 @@ package com.mihey.homework.combinationevaluator;
 
 import java.util.Arrays;
 
-public class CombinationEvaluator {
-    public CombinationEvaluator() {
+ class CombinationEvaluator {
+     CombinationEvaluator() {
     }
+
     /**
      * Check if array contains straight combination (5 "cards", initial order does not matter).
      *
@@ -12,7 +13,7 @@ public class CombinationEvaluator {
      */
 
 
-    public boolean isStraight(int[] combination) {
+     boolean isStraight(int[] combination) {
         if (combination == null || combination.length != 5) return false;
         Arrays.sort(combination);
         for (int i = 0; i < 4; i++) {
@@ -31,13 +32,13 @@ public class CombinationEvaluator {
      *
      * @return true if combination is full house, false otherwise
      */
-    public boolean isFullhouse(int[] combination) {
+     boolean isFullhouse(int[] combination) {
         if (combination == null || combination.length != 5) return false;
         Arrays.sort(combination);
-        if(combination[1]==combination[3])
+        if (combination[1] == combination[3])
             return false;
         if (combination[0] == combination[1] && combination[3] == combination[4])
-            if(combination[2]==combination[1]||combination[2]==combination[3])
+            if (combination[2] == combination[1] || combination[2] == combination[3])
                 return true;
         return false;
 
