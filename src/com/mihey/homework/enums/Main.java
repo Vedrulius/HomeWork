@@ -2,7 +2,6 @@ package com.mihey.homework.enums;
 
 public class Main {
     public static void main(String[] args) {
-        Planets planet;
         for (Planets p : Planets.values()) {
             System.out.println("My weight on planet " + p + " is " + p.getMyMassOnPlanet() + " kg");
         }
