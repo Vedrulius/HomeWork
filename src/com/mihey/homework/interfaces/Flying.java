@@ -3,7 +3,7 @@ package com.mihey.homework.interfaces;
 interface Flying {
     int getMaxHeight();
 
-    default int getDefaultHeigth() {
+    default int getDefaultHeight() {
         return 1000;
     }
 
@@ -64,6 +64,6 @@ class Info {
         System.out.println("Maximum fly height og airplane: " + a.getMaxHeight() + " meters.");
         System.out.println("Maximum whale immersion depth: " + w.getMaxDepth() + "meters.");
         System.out.println(Launchable.getDefault());
-        System.out.println("Default heigth: " + a.getDefaultHeigth());
+        System.out.println("Default height: " + a.getDefaultHeight());
     }
 }

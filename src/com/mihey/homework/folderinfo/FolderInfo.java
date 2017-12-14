@@ -42,17 +42,22 @@ public class FolderInfo {
         try {
             Properties prop = new Properties();
             prop.load(new FileReader(args[0]));
-            File file = new File(prop.getProperty("folderPath"));
+            String folderPath = prop.getProperty("folderPath");
+            if (folderPath == null) {
+                System.out.println("No property");
+                return;
+            }
+            File file = new File(folderPath);
 
             SubFolderInfo folder = new SubFolderInfo();
             File[] folders = file.listFiles();
-            for (int i = 0; i < folders.length; i++) {
-                System.out.println(folder.getFoldersInfo(folders[i]));
+            for (File folder1 : folders) {
+                System.out.println(folder.getFoldersInfo(folder1));
             }
-        } catch (NullPointerException e) {
-            System.out.println(" No path to folder, fill the property file");
+
         } catch (FileNotFoundException e) {
-            System.out.println(" Path to property file not found");
+            System.err.println(" Path to property file not found");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

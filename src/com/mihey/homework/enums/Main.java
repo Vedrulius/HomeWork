@@ -3,7 +3,7 @@ package com.mihey.homework.enums;
 public class Main {
     public static void main(String[] args) {
         for (Planets p : Planets.values()) {
-            System.out.println("My weight on planet " + p + " is " + p.getMyMassOnPlanet() + " kg");
+            System.out.println("My weight on planet " + p + " is " + p.getMyMassOnPlanet(75) + " kg");
         }
     }
 }
@@ -30,15 +30,13 @@ enum CardRanks {
 enum Planets {
     MERCURY(0.26), VENUS(0.9), EARTH(1), MARS(0.37), JUPITER(2.64), SATURN(1.13);
 
-    private double weigth_coef;
+    private double weightCoef;
 
-    Planets(double weight_coef) {
-        this.weigth_coef = weight_coef;
+    Planets(double weightCoef) {
+        this.weightCoef = weightCoef;
     }
 
-    private int earthweight = 75;
-
-    public double getMyMassOnPlanet() {
-        return earthweight * weigth_coef;
+    public double getMyMassOnPlanet(int earthweight) {
+        return earthweight * weightCoef;
     }
 }
