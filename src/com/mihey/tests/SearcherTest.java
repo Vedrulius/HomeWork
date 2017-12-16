@@ -20,20 +20,20 @@ public class SearcherTest {
         searcher = new Searcher();
     }
 
-    @org.junit.Test
+        @org.junit.Test
 //    @Test
     public void testIndexNotFound() {
-        Assert.assertEquals(-1, searcher.search(new int[0], 0));
-        Assert.assertEquals(-8, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6}, 9));
-        Assert.assertEquals(-11, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 12));
+        assertEquals(-1, searcher.search(new int[0], 0));
+        assertEquals(-8, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6}, 9));
+        assertEquals(-11, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 12));
     }
 
 
     @org.junit.Test
     public void testIndexCorrect() {
-        Assert.assertEquals(0, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 0));
-        Assert.assertEquals(9, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 9));
-        Assert.assertEquals(4, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 4));
+        assertEquals(0, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 0));
+        assertEquals(9, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 9));
+        assertEquals(4, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 4));
     }
 }
 //    @AfterEach
