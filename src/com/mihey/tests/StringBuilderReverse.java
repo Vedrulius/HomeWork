@@ -8,12 +8,3 @@ public class StringBuilderReverse {
         return str.reverse();
     }
 }
-
-//class Main {
-//    public static void main(String[] args) {
-//
-//        StringBuilderReverse sbr = new StringBuilderReverse();
-//        StringBuilder s = new StringBuilder("werty");
-//        System.out.println(sbr.getResult(s));
-//    }
-//}
