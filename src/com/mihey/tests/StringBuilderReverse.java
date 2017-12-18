@@ -3,8 +3,8 @@ package com.mihey.tests;
 public class StringBuilderReverse {
 
 
-    public StringBuilder getResult(StringBuilder str) {
+    public String getResult(String str) {
 
-        return str.reverse();
+        return new StringBuilder(str).reverse().toString();
     }
 }
