@@ -13,9 +13,4 @@ public class StringBuilderReverseTest {
     public void setUp(){
         StringBuilderReverse sbr=new StringBuilderReverse();
     }
-//    @Test
-//    public void testStringBuilderReverseCorrect() throws Exception {
-//        Assertions.
-//    }
-
 }
