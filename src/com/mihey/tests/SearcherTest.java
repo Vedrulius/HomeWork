@@ -36,12 +36,4 @@ public class SearcherTest {
         assertEquals(4, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 4));
     }
 }
-//    @AfterEach
-//    public void cleanUp(){
-//        System.out.println("Cleanup");
-//    }
-//
-//    @AfterAll
-//    public static void afterAll() {
-//        System.out.println("Test finish");
-//    }
+

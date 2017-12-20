@@ -11,14 +11,19 @@ import static org.junit.Assert.*;
 public class StringEqualsTest {
     StringEquals compare;
 
-    @BeforeEach
+    @Before
     public void setUp() {
-        StringEquals compare = new StringEquals();
+         compare = new StringEquals();
     }
 
     @Test
     public void testCompareStringsCorrect()  {
         assertTrue( compare.compareStrings("abc","abc"));
+        assertFalse(compare.compareStrings("abc","abd"));
+        assertFalse(compare.compareStrings("abc",null));
+        assertFalse(compare.compareStrings("abc","аbc"));
+        assertFalse(compare.compareStrings("abc","Abc"));
     }
+
 
 }
