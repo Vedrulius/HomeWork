@@ -1,6 +1,8 @@
 package com.mihey.homework.longestword;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class LongestWord {
@@ -11,7 +13,7 @@ public class LongestWord {
         }
         Properties prop = new Properties();
         prop.load(new FileReader(args[0]));
-        File file = new File(prop.getProperty("longestWord"));
+        File file = new File(prop.getProperty("fileToList"));
         String result = "";
         int longest = 0;
         if (file.exists() && file.isFile()) {

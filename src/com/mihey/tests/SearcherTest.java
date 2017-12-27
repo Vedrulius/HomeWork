@@ -20,20 +20,16 @@ public class SearcherTest {
         searcher = new Searcher();
     }
 
-        @org.junit.Test
-//    @Test
-    public void testIndexNotFound() {
-        assertEquals(-1, searcher.search(new int[0], 0));
-        assertEquals(-8, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6}, 9));
-        assertEquals(-11, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 12));
-    }
-
-
     @org.junit.Test
     public void testIndexCorrect() {
         assertEquals(0, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 0));
-        assertEquals(9, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 9));
+        assertEquals(7, searcher.search(new int[]{ 2, 3, 4, 5, 6, 7, 8, 9}, 9));
         assertEquals(4, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 4));
+//        index not found
+        assertEquals(-1, searcher.search(new int[0], 0));
+        assertEquals(-1, searcher.search(new int[]{3,4,5,6,7,8,9}, 1));
+        assertEquals(-11, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 12));
+
     }
 }
 
