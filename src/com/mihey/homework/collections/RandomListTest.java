@@ -8,10 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RandomListTest {
     RandomList rl;
+
     @Before
-    void setUp(){
-        rl=new RandomList();
+    void setUp() {
+        rl = new RandomList();
     }
+
     @Test
     void generateRandomList() {
 

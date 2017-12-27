@@ -1,7 +1,9 @@
 package com.mihey.homework.collections;
 
-import java.io.*;
-import java.lang.reflect.Array;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +28,12 @@ public class FileToList {
                 }
             }
             System.out.println(list);
+            for (int i = list.size() - 1; i >= 0; i--) {
+                if (list.get(i).length() < 3)
+                    list.remove(i);
+            }
+            System.out.println(list);
+
         } else {
             System.out.println("File does not exist");
         }
