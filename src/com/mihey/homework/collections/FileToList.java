@@ -28,9 +28,16 @@ public class FileToList {
                 }
             }
             System.out.println(list);
-            for (int i = list.size() - 1; i >= 0; i--) {
+            for (int i = list.size() - 1; i >= 0; i--) {  // list filtered by length <3
                 if (list.get(i).length() < 3)
                     list.remove(i);
+            }
+            System.out.println(list);
+            for (int i = list.size() - 1; i >= 0; i--) {  // list without duplicates
+                for (int j = 0; j <i; j++) {
+                    if (list.get(i).equalsIgnoreCase(list.get(j)))
+                        list.remove(j);
+                }
             }
             System.out.println(list);
 
