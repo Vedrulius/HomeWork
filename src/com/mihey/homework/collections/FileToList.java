@@ -4,12 +4,29 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class FileToList {
+    private List<String> filterByLength(List<String> list, int length) { // list filtered by length < length
+        Iterator<String> li = list.listIterator();
+        while (li.hasNext()) {
+            if (li.next().length() < length)
+                li.remove();
+        }
+        return list;
+    }
+
+    private List<String> removeDuplicates(List<String> list) {  // list without duplicates
+        for (int i = list.size() - 1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (list.get(i).equalsIgnoreCase(list.get(j)))
+                    list.remove(j);
+            }
+        }
+
+        return list;
+    }
+
     public static void main(String[] args) throws IOException {
         if (args.length < 1) {
             System.out.println("No path");
@@ -27,20 +44,9 @@ public class FileToList {
                     list.addAll(Arrays.asList(tokens));
                 }
             }
-            System.out.println(list);
-            for (int i = list.size() - 1; i >= 0; i--) {  // list filtered by length <3
-                if (list.get(i).length() < 3)
-                    list.remove(i);
-            }
-            System.out.println(list);
-            for (int i = list.size() - 1; i >= 0; i--) {  // list without duplicates
-                for (int j = 0; j <i; j++) {
-                    if (list.get(i).equalsIgnoreCase(list.get(j)))
-                        list.remove(j);
-                }
-            }
-            System.out.println(list);
-
+            FileToList ftl = new FileToList();
+            System.out.println(ftl.filterByLength(list, 3).size());
+            System.out.println(ftl.removeDuplicates(list).size());
         } else {
             System.out.println("File does not exist");
         }
