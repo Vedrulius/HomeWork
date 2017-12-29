@@ -19,11 +19,18 @@ public class FileToList {
     private List<String> removeDuplicates(List<String> list) {  // list without duplicates
         for (int i = list.size() - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
-                if (list.get(i).equalsIgnoreCase(list.get(j)))
+                if (list.get(i).equals(list.get(j)))
                     list.remove(j);
             }
         }
+        return list;
+    }
 
+    private List<String> removeDupWithSet(List<String> list) {
+        Set<String> set = new HashSet<>();
+        set.addAll(list);
+        list.clear();
+        list.addAll(set);
         return list;
     }
 
@@ -44,9 +51,6 @@ public class FileToList {
                     list.addAll(Arrays.asList(tokens));
                 }
             }
-            FileToList ftl = new FileToList();
-            System.out.println(ftl.filterByLength(list, 3).size());
-            System.out.println(ftl.removeDuplicates(list).size());
         } else {
             System.out.println("File does not exist");
         }
