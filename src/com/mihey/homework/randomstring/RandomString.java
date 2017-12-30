@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class RandomString {
     public static String generateRandomString(int limit) {
-        if (limit <= 0) return "Limit must be positive";
+        if (limit <= 0) throw new AssertionError("Limit must be positive");
+//            return "Limit must be positive";
         StringBuilder result = new StringBuilder();
         Random randomABC = new Random();
         for (int i = 0; i < limit; i++) {
@@ -15,6 +16,6 @@ public class RandomString {
 
     public static void main(String[] args) {
 
-        System.out.println("\"" + generateRandomString(5) + "\"");
+        System.out.println("\"" + generateRandomString(-1) + "\"");
     }
 }
