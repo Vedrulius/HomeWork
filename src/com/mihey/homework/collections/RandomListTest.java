@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RandomListTest {
@@ -16,10 +19,11 @@ class RandomListTest {
 
     @Test
     public void generateRandomList() {
+        List<String> list = rl.generateRandomList(100);
         assertEquals(20, rl.generateRandomList(20).size());
         assertEquals(0, rl.generateRandomList(0).size());
-        assertFalse(rl.generateRandomList(100).contains(null));
-        assertFalse(rl.generateRandomList(100).contains(""));
+        assertFalse(list.contains(null));
+        assertFalse(list.contains(""));
     }
 
     @Test
