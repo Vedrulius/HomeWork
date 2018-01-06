@@ -18,7 +18,8 @@ class RandomListTest {
     public void generateRandomList() {
         assertEquals(20, rl.generateRandomList(20).size());
         assertEquals(0, rl.generateRandomList(0).size());
-        assertFalse(rl.generateRandomList(100).contains(null) & rl.generateRandomList(100).contains(""));
+        assertFalse(rl.generateRandomList(100).contains(null));
+        assertFalse(rl.generateRandomList(100).contains(""));
     }
 
     @Test
