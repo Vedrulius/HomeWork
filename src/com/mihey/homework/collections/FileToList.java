@@ -1,5 +1,7 @@
 package com.mihey.homework.collections;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,8 +12,9 @@ public class FileToList {
     private List<String> filterByLength(List<String> list, int length) { // list filtered by length < length
         Iterator<String> li = list.listIterator();
         while (li.hasNext()) {
-            if (li.next().length() < length)
+            if (li.next().length() < length) {
                 li.remove();
+            }
         }
         return list;
     }
@@ -54,6 +57,6 @@ public class FileToList {
         } else {
             System.out.println("File does not exist");
         }
-
+        System.out.println(list);
     }
 }

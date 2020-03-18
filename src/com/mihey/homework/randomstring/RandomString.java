@@ -9,13 +9,13 @@ public class RandomString {
         StringBuilder result = new StringBuilder();
         Random randomABC = new Random();
         for (int i = 0; i < limit; i++) {
-            result.append((char) ('a' + randomABC.nextInt(26)));
+            result.append((char) ( 'a' + randomABC.nextInt(26)));
         }
         return result.toString();
     }
 
     public static void main(String[] args) {
 
-        System.out.println("\"" + generateRandomString(-1) + "\"");
+        System.out.println("\"" + generateRandomString(5) + "\"");
     }
 }

@@ -13,7 +13,7 @@ public class LongestWord {
         }
         Properties prop = new Properties();
         prop.load(new FileReader(args[0]));
-        File file = new File(prop.getProperty("fileToList"));
+        File file = new File(prop.getProperty("pathToFile"));
         String result = "";
         int longest = 0;
         if (file.exists() && file.isFile()) {
