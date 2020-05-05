@@ -30,6 +30,7 @@ public class SearcherTest {
         assertEquals(-1, searcher.search(new int[]{3,4,5,6,7,8,9}, 1));
         assertEquals(-11, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 12));
 
+        assertNotEquals(11, searcher.search(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 12));
     }
 }
 

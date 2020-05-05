@@ -17,10 +17,9 @@ public class SingleNumberTest {
 
     @Test
     void testSingleNumber() {
-        assertEquals(9, snt.singleNumber(new int[]{1,1,2,2,5,5,9}));
-        assertEquals(5, snt.singleNumber(new int[]{1,1,2,2,5,9,9}));
-        assertEquals(0, snt.singleNumber(new int[]{}));
-        assertNotEquals(0, snt.singleNumber(new int[]{1,1,2,2,5,5,9}));
+        assertEquals(9, snt.singleNumber(new int[]{1, 1, 2, 2, 5, 5, 9}));
+        assertEquals(5, snt.singleNumber(new int[]{1, 1, 2, 2, 5, 9, 9}));
+        assertEquals(0, snt.singleNumber(new int[0]));
+        assertNotEquals(0, snt.singleNumber(new int[]{1, 1, 2, 2, 5, 5, 9}));
     }
 }
-
