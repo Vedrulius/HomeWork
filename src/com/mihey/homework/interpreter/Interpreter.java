@@ -72,7 +72,7 @@ class ListNames {                              //displays information about file
         File[] pathName = file.listFiles();
         StringBuilder sb = new StringBuilder();
         for (File f : pathName) {
-            sb.append(f.toString().substring(remove + 1) + "\t");
+            sb.append(f.toString().substring(remove + 1)).append("\t");
         }
         return sb.toString();
     }
@@ -90,7 +90,7 @@ public class Interpreter {
         Tail tail = new Tail();
         Properties prop = new Properties();
         prop.load(new FileReader(args[0]));
-        File file = new File(prop.getProperty("interpreter"));
+        File file = new File(prop.getProperty("interpreter", "no such key in property file"));
         File currDir = new File(".");
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
