@@ -19,12 +19,12 @@ import java.util.List;
 import java.util.Properties;
 
 abstract class Reader {
-    List<String> readFromFile(File file) throws IOException {
+    List<String> readFromFile(File file) {
         if (!file.exists()) {
             System.out.println("cannot open " + file + " for reading: No such file or directory");
         }
         if (file.isDirectory()) {
-            throw new IOException("error reading " + file + ": Is a directory");
+            System.out.println("error reading " + file + ": Is a directory");
         }
         List<String> reader = new ArrayList<>();
         int count = 0;
@@ -34,13 +34,15 @@ abstract class Reader {
                 reader.add(count, line);
                 count++;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return reader;
     }
 }
 
 class Head extends Reader {                        // prints the first 10 lines of a given file (head linux)
-    void getHead(File file) throws IOException {
+    void getHead(File file) {
         List<String> head = readFromFile(file);
         for (int i = 0; i < head.size() && i < 10; i++) {
             System.out.println(head.get(i));
@@ -49,7 +51,7 @@ class Head extends Reader {                        // prints the first 10 lines 
 }
 
 class Tail extends Reader {                      // prints the last 10 lines of a given file (tail linux)
-    void getTail(File file) throws IOException {
+    void getTail(File file) {
         List<String> tail = readFromFile(file);
         int size = tail.size();
         if (size > 10) {
@@ -93,9 +95,15 @@ public class Interpreter {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             while ((line = br.readLine()) != null) {
-                if (line.matches("date *")) System.out.println(d);
-                if (line.matches("echo .*")) System.out.println(line.substring(5));
-                if (line.matches("ls *")) System.out.println(list.getPathNames(currDir));
+                if (line.matches("date *")) {
+                    System.out.println(d);
+                }
+                if (line.matches("echo .*")) {
+                    System.out.println(line.substring(5));
+                }
+                if (line.matches("ls *")) {
+                    System.out.println(list.getPathNames(currDir));
+                }
                 if (line.matches("head .*")) {
                     head.getHead(new File(line.substring(5)));
                 }
@@ -103,6 +111,8 @@ public class Interpreter {
                     tail.getTail(new File(line.substring(5)));
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
