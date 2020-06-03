@@ -3,7 +3,6 @@ package com.mihey.hello;
 class Body {
     String firstName;
     String lastName;
-
     public Body() {
         this("Jon", "Doe");
     }

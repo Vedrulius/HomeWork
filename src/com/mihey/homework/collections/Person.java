@@ -2,17 +2,17 @@ package com.mihey.homework.collections;
 
 public class Person implements Comparable<Person> {
 
-    private String name;
+    private String firstName;
 
     private String lastName;
 
-    Person(String name, String lastName) {
-        this.name = name;
+    Person(String firstName, String lastName) {
+        this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    String getName() {
-        return name;
+    String getFirstName() {
+        return firstName;
     }
 
     String getLastName() {
@@ -22,14 +22,14 @@ public class Person implements Comparable<Person> {
     @Override
     public String toString() {
         return "Person{" +
-                "name='" + name + '\'' +
+                "name='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
 
     @Override
     public int compareTo(Person person) {
-        int result = name.compareToIgnoreCase(person.getName());
+        int result = firstName.compareToIgnoreCase(person.getFirstName());
         if (result == 0) {
             return lastName.compareToIgnoreCase(person.getLastName());
         }

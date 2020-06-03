@@ -11,17 +11,22 @@ class SubFolderInfo {
     public String getFoldersInfo(File subFolder) {
         if (subFolder.isDirectory())
             return "Folder location: " + subFolder + "; Created: " +
-                    subFolder.lastModified() + "; Folder size: " + getFolderSize(subFolder) + "bytes" + "\n";
+                    subFolder.lastModified() + "; Folder size: " + getFolderSize(subFolder) + " bytes" + "\n";
 
         return subFolder + " \"is not a folder\"\n";
     }
 
     private long getFolderSize(File folder) {
+//
         long size = 0;
         if (folder.isFile()) {
             size = folder.length();
         } else {
             File[] subFile = folder.listFiles();
+            if (subFile == null) {
+                System.out.println(folder+"  :System files " +"  \n");     // !!!!!
+                return 0;
+            }
             for (File file : subFile) {
                 if (file.isFile()) {
                     size += file.length();

@@ -11,7 +11,7 @@ public class UniqueWords {
         }
         Properties prop = new Properties();
         prop.load(new FileReader(args[0]));
-        File file = new File(prop.getProperty("TheInvisibleMan"));
+        File file = new File(prop.getProperty("Schildt"));
         String line;
         int count = 0;
         Map<String, Integer> map = new TreeMap<>();
