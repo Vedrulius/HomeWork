@@ -1,5 +1,9 @@
 package com.mihey.homework.csvgenerator;
 
+/**
+ *
+ */
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
