@@ -1,4 +1,4 @@
-package com.mihey.hello;
+package com.mihey.jetbrains;
 
 import java.util.Scanner;
 

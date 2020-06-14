@@ -16,9 +16,10 @@ public class Hello {
     }
 
     public static void main(String args[]) {
-        Hello obj = new Hello();
-//        obj = obj.SetValues();
-        obj.display();
+        System.out.println((char)('a'+1));
+//        Hello obj = new Hello();
+////        obj = obj.SetValues();
+//        obj.display();
     }
 }
 
