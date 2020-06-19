@@ -1,30 +1,54 @@
 package com.mihey.hello;
 
+
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Solution {
 
+    private static String array = null;
 
-    public static void addValueByIndex(long[] arr, int idx, long val) {
-        arr[idx] = val + arr[idx];
-        for (long l : arr) {
-            System.out.print(l + " ");
-        }
+    public static void methodCatchingSomeExceptions() {
+       try{ methodThrowingExceptions();
+       } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+           System.out.println(e.getClass().getSimpleName());
+       }
+        // invoke methodThrowingExceptions here and catch some types of exceptions
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String[] tmp = sc.nextLine().split(" ");
-        int idx = sc.nextInt();
-        long val = sc.nextLong();
-        int n = tmp.length;
-        long[] arr = new long[n];
-
-        for (int i = 0; i < n; i++) {
-            arr[i] = Long.parseLong(tmp[i], 10);
+    /* Do not change code below */
+    public static void methodThrowingExceptions() {
+        if (array == null) {
+            return;
         }
-        addValueByIndex(arr, idx, val);
+        int[] integers = Arrays.stream(array.split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        Object someValue = integers[integers[0]];
+        if (integers[0] + integers[1] == integers[2]) {
+            integers = null;
+        }
+        int sum = 0;
+        for (int i : integers) {
+            sum += i;
+        }
+        int meanValue = integers.length / sum;
+        if (integers[2] == integers[3]) {
+            String string = (String) someValue;
+            System.out.print("Random value is " + string);
+        }
+        System.out.print("Mean is " + meanValue);
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        array = scanner.nextLine();
+        try {
+            methodCatchingSomeExceptions();
+        } catch (Exception e) {
+            System.out.println("Caught: " + e.getClass().getName());
+        }
     }
 }
 
