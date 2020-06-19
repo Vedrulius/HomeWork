@@ -13,15 +13,15 @@ package com.mihey.jetbrains;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class EncryptDecrypt {
 
     public String encrypt(String input, int key) {
-        StringBuilder encrypted = new StringBuilder(input);
+        StringBuilder encrypted = new StringBuilder(input);  // -mode enc -key 5 -in in.txt -out output.txt
         for (int i = 0; i < input.length(); i++) {
             char newChar = (char) (encrypted.charAt(i) + key);
             encrypted.setCharAt(i, newChar);
@@ -39,7 +39,13 @@ public class EncryptDecrypt {
     }
 
     public static String readFileAsString(String fileName) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(fileName)));
+        Scanner sc = new Scanner(new File(fileName));
+        StringBuilder a = new StringBuilder("");
+        while (sc.hasNext()) {
+            a.append(sc.nextLine());
+        }
+        return a.toString();
+        //        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
     public static void writeToFile(String text, String pathToFile) throws IOException {
@@ -51,7 +57,6 @@ public class EncryptDecrypt {
 
     public static void main(String[] args) {
 
-
         Map<String, String> map = new HashMap<>();
         for (int i = 0; i < args.length - 1; i += 2) {
             map.put(args[i], args[i + 1]);
@@ -62,46 +67,43 @@ public class EncryptDecrypt {
         String input = "";
         String pathToFile = "";
 
+        if (map.containsKey("-key")) {
+            key = Integer.parseInt(map.get("-key"));
+        }
 
         if (map.containsKey("-mode")) {
             type = map.get("-mode");
         }
 
-        if (map.containsKey("-data") || !map.containsKey("-out")) {
+        if (map.containsKey("-data") /*|| !map.containsKey("-out")*/) {
             input = map.get("-data");
         }
 
+
         if (map.containsKey("-in") && map.containsKey("-out") && !map.containsKey("-data")) {
-            pathToFile = "/home/mihey/Cither/" + map.get("-out");
+            pathToFile = "./" + map.get("-out");
             try {
-                input = readFileAsString("/home/mihey/Cither/" + (map.get("-in")));
+                input = readFileAsString("./" + (map.get("-in")));
             } catch (IOException e) {
                 System.out.println("Error");
             }
 
         }
 
-        if (map.containsKey("-key")) {
-            key = Integer.parseInt(map.get("-key"));
-        }
-
         EncryptDecrypt enc = new EncryptDecrypt();
+
         if (type.equals("enc")) {
             if (map.containsKey("-data") || !map.containsKey("-out")) {
-                System.out.println(input);
                 System.out.println(enc.encrypt(input, key));
             } else {
-                System.out.println(input);
-                System.out.println(enc.decrypt(input, key));
                 try {
                     writeToFile(enc.encrypt(input, key), pathToFile);
                 } catch (IOException e) {
                     System.out.println("Error");
-                    e.printStackTrace();
                 }
             }
-
         }
+
         if (type.equals("dec")) {
             if (map.containsKey("-data") || !map.containsKey("-out")) {
                 System.out.println(enc.decrypt(input, key));
@@ -111,7 +113,6 @@ public class EncryptDecrypt {
                 } catch (IOException e) {
                     System.out.println("Error");
                 }
-
             }
         }
     }
