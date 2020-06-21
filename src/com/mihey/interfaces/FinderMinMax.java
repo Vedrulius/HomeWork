@@ -1,4 +1,4 @@
-package com.mihey.jetbrains.temp;
+package com.mihey.interfaces;
 
 import java.util.Arrays;
 import java.util.Scanner;
