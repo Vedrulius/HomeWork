@@ -20,8 +20,31 @@ import java.util.Scanner;
 
 public class EncryptDecrypt {
 
-    public String encrypt(String input, int key) {
-        StringBuilder encrypted = new StringBuilder(input);  // -mode enc -key 5 -in in.txt -out output.txt
+    public String encryptShift(String input, int key) {         // Encrypt by shifting unicode table
+        StringBuilder encrypted = new StringBuilder(input);
+        String alphabetUpCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String alphabetLowCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toLowerCase();
+        String shiftedAlphabetUC = alphabetUpCase.substring(key) + alphabetUpCase.substring(0, key);
+        String shiftedAlphabetLC = alphabetLowCase.substring(key) + alphabetLowCase.substring(0, key);
+
+        for (int i = 0; i < input.length(); i++) {
+            char currChar = encrypted.charAt(i);
+            if ((currChar + "").matches("[A-Z]")) {
+                int idx = alphabetUpCase.indexOf(currChar);
+                char newChar = shiftedAlphabetUC.charAt(idx);
+                encrypted.setCharAt(i, newChar);
+            }
+            if ((currChar + "").matches("[a-z]")) {
+                int idx = alphabetLowCase.indexOf(currChar);
+                char newChar = shiftedAlphabetLC.charAt(idx);
+                encrypted.setCharAt(i, newChar);
+            }
+        }
+        return encrypted.toString();
+    }
+
+    public String encryptUnicode(String input, int key) {         // Encrypt by shifting alphabet
+        StringBuilder encrypted = new StringBuilder(input);
         for (int i = 0; i < input.length(); i++) {
             char newChar = (char) (encrypted.charAt(i) + key);
             encrypted.setCharAt(i, newChar);
@@ -29,7 +52,30 @@ public class EncryptDecrypt {
         return encrypted.toString();
     }
 
-    public String decrypt(String input, int key) {
+    public String decryptShift(String input, int key) {        // Decrypt by shifting alphabet
+        StringBuilder decrypted = new StringBuilder(input);
+        String alphabetUpCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String alphabetLowCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toLowerCase();
+        String shiftedAlphabetUC = alphabetUpCase.substring(key) + alphabetUpCase.substring(0, key);
+        String shiftedAlphabetLC = alphabetLowCase.substring(key) + alphabetLowCase.substring(0, key);
+
+        for (int i = 0; i < input.length(); i++) {
+            char currChar = decrypted.charAt(i);
+            if ((currChar + "").matches("[A-Z]")) {
+                int idx = shiftedAlphabetUC.indexOf(currChar);
+                char newChar = alphabetUpCase.charAt(idx);
+                decrypted.setCharAt(i, newChar);
+            }
+            if ((currChar + "").matches("[a-z]")) {
+                int idx = shiftedAlphabetLC.indexOf(currChar);
+                char newChar = alphabetLowCase.charAt(idx);
+                decrypted.setCharAt(i, newChar);
+            }
+        }
+        return decrypted.toString();
+    }
+
+    public String decryptUnicode(String input, int key) {        // Decrypt by shifting unicode table
         StringBuilder decrypted = new StringBuilder(input);
         for (int i = 0; i < input.length(); i++) {
             char newChar = (char) (decrypted.charAt(i) - key);
@@ -45,7 +91,6 @@ public class EncryptDecrypt {
             a.append(sc.nextLine());
         }
         return a.toString();
-        //        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
     public static void writeToFile(String text, String pathToFile) throws IOException {
@@ -63,6 +108,7 @@ public class EncryptDecrypt {
         }
 
         String type = "enc";
+        String alg = "shift";
         int key = 0;
         String input = "";
         String pathToFile = "";
@@ -75,7 +121,7 @@ public class EncryptDecrypt {
             type = map.get("-mode");
         }
 
-        if (map.containsKey("-data") /*|| !map.containsKey("-out")*/) {
+        if (map.containsKey("-data") || !map.containsKey("-out")) {
             input = map.get("-data");
         }
 
@@ -91,27 +137,52 @@ public class EncryptDecrypt {
         }
 
         EncryptDecrypt enc = new EncryptDecrypt();
-
-        if (type.equals("enc")) {
-            if (map.containsKey("-data") || !map.containsKey("-out")) {
-                System.out.println(enc.encrypt(input, key));
-            } else {
-                try {
-                    writeToFile(enc.encrypt(input, key), pathToFile);
-                } catch (IOException e) {
-                    System.out.println("Error");
+        if (map.containsKey("-alg") && map.get("-alg").equals("unicode")) {
+            if (type.equals("enc")) {
+                if (map.containsKey("-data") || !map.containsKey("-out")) {
+                    System.out.println(enc.encryptUnicode(input, key));
+                } else {
+                    try {
+                        writeToFile(enc.encryptUnicode(input, key), pathToFile);
+                    } catch (IOException e) {
+                        System.out.println("Error");
+                    }
                 }
             }
-        }
 
-        if (type.equals("dec")) {
-            if (map.containsKey("-data") || !map.containsKey("-out")) {
-                System.out.println(enc.decrypt(input, key));
-            } else {
-                try {
-                    writeToFile(enc.decrypt(input, key), pathToFile);
-                } catch (IOException e) {
-                    System.out.println("Error");
+            if (type.equals("dec")) {
+                if (map.containsKey("-data") || !map.containsKey("-out")) {
+                    System.out.println(enc.decryptUnicode(input, key));
+                } else {
+                    try {
+                        writeToFile(enc.decryptUnicode(input, key), pathToFile);
+                    } catch (IOException e) {
+                        System.out.println("Error");
+                    }
+                }
+            }
+        } else {
+            if (type.equals("enc")) {
+                if (map.containsKey("-data") || !map.containsKey("-out")) {
+                    System.out.println(enc.encryptShift(input, key));
+                } else {
+                    try {
+                        writeToFile(enc.encryptShift(input, key), pathToFile);
+                    } catch (IOException e) {
+                        System.out.println("Error");
+                    }
+                }
+            }
+
+            if (type.equals("dec")) {
+                if (map.containsKey("-data") || !map.containsKey("-out")) {
+                    System.out.println(enc.decryptShift(input, key));
+                } else {
+                    try {
+                        writeToFile(enc.decryptShift(input, key), pathToFile);
+                    } catch (IOException e) {
+                        System.out.println("Error");
+                    }
                 }
             }
         }
