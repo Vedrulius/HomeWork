@@ -8,7 +8,7 @@ public class Main {
     }
 }
 
-enum CardSuit {
+ enum CardSuit {
     HEARTS, SPADES, DIAMONDS, CLUBS
 }
 

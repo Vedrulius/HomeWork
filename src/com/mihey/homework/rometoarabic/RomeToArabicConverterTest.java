@@ -1,9 +1,9 @@
 package com.mihey.homework.rometoarabic;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static com.mihey.homework.rometoarabic.RomeToArabicConverter.convertRomeToArabic;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RomeToArabicConverterTest {
     @Test
