@@ -1,5 +1,9 @@
 package com.mihey.jetbrains.simple_banking_system;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -69,10 +73,40 @@ public class SimpleBanking {
             }
             luhn += cn[i];
         }
-        return sb.append(10-luhn%10).toString();
+        return sb.append(10 - luhn % 10).toString();
+    }
+
+    public static void createNewDatabase(String fileName) {
+
+        String url = "jdbc:sqlite:/home/mihey/Sqlite/" + fileName;
+        String sql = "CREATE TABLE IF NOT EXISTS card ("
+                + "     id INTEGER PRIMARY KEY,"
+                + "     number TEXT,"
+                + "     pin TEXT,"
+                + "     balance INTEGER DEFAULT 0"
+                + ");";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    static void insert(String fileName, String card, String pin) {
+        String url = "jdbc:sqlite:/home/mihey/Sqlite/" + fileName;
+        String query = "insert into card (number, pin) values ('" + card + "','" + pin + "')";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(query);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
+        String db = args[1];
+        createNewDatabase(db);
         String pin = null;
         String cardNumber = null;
         Scanner sc = new Scanner(System.in);
@@ -86,6 +120,7 @@ public class SimpleBanking {
                     System.out.printf("Your card has been created\n" +
                             "Your card number:\n%s\n" +
                             "Your card PIN:\n%s\n", cardNumber, pin);
+                    insert(db, cardNumber, pin);
                     System.out.println();
                     greet();
                     answer = getAnswer();
