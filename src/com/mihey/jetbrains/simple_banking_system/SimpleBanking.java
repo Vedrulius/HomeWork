@@ -1,9 +1,6 @@
 package com.mihey.jetbrains.simple_banking_system;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -18,9 +15,13 @@ public class SimpleBanking {
 
     //    Balance screen
     static void balance() {
-        System.out.println("1. Balance");
-        System.out.println("2. Log out");
-        System.out.println("0. Exit");
+        System.out.println(
+                "1. Balance\n" +
+                "2. Add income\n" +
+                "3. Do transfer\n" +
+                "4. Close account\n" +
+                "5. Log out\n" +
+                "0. Exit");
     }
 
     // validate card number and pin
@@ -93,6 +94,37 @@ public class SimpleBanking {
         }
     }
 
+    public static void connect(String fileName) {
+
+        String url = "jdbc:sqlite:/home/mihey/Sqlite/" + fileName;
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    static Account select(String fileName, String pin) {
+        String cn = null;
+        String p = null;
+        String url = "jdbc:sqlite:/home/mihey/Sqlite/" + fileName;
+        String query = "select number,pin from card where pin= " + pin;
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            cn = rs.getString("number");
+            p = rs.getString("pin");
+//            while (rs.next()) {
+//                System.out.println(rs.getInt("id") +  "\t" +
+//                        rs.getString("name") + "\t" +
+//                        rs.getDouble("capacity"));
+//            }
+        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+        }
+        return new Account(cn, p);
+    }
+
     static void insert(String fileName, String card, String pin) {
         String url = "jdbc:sqlite:/home/mihey/Sqlite/" + fileName;
         String query = "insert into card (number, pin) values ('" + card + "','" + pin + "')";
@@ -101,6 +133,32 @@ public class SimpleBanking {
             stmt.execute(query);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    static final class Account {
+        private final String cardNumber;
+        private final String pin;
+
+        public Account(String cardNumber, String pin) {
+            this.cardNumber = cardNumber;
+            this.pin = pin;
+        }
+
+        public String getCardNumber() {
+            return cardNumber;
+        }
+
+        public String getPin() {
+            return pin;
+        }
+
+        @Override
+        public String toString() {
+            return "Account{" +
+                    "cardNumber='" + cardNumber + '\'' +
+                    ", pin='" + pin + '\'' +
+                    '}';
         }
     }
 
@@ -130,7 +188,9 @@ public class SimpleBanking {
                     String cn = sc.nextLine();
                     System.out.println("Enter your PIN:");
                     String p = sc.nextLine();
-                    if (validate(cn, cardNumber, p, pin)) {
+                    Account a = select(db, p);
+//                    System.out.println(a.toString());
+                    if (validate(cn, a.getCardNumber(), p, a.getPin())) {
                         System.out.println("You have successfully logged in!\n");
                         balance();
                         answer = getAnswer();
