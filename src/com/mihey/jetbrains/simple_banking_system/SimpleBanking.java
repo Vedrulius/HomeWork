@@ -15,8 +15,7 @@ public class SimpleBanking {
 
     //    Balance screen
     static void balance() {
-        System.out.println(
-                "1. Balance\n" +
+        System.out.println("1. Balance\n" +
                 "2. Add income\n" +
                 "3. Do transfer\n" +
                 "4. Close account\n" +
@@ -34,7 +33,7 @@ public class SimpleBanking {
     static String getAnswer() {
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
-        while (!answer.matches("[0-2]")) {
+        while (!answer.matches("[0-5]")) {
             greet();
             answer = scanner.nextLine();
         }
@@ -107,22 +106,19 @@ public class SimpleBanking {
     static Account select(String fileName, String pin) {
         String cn = null;
         String p = null;
+        int b = 0;
         String url = "jdbc:sqlite:/home/mihey/Sqlite/" + fileName;
-        String query = "select number,pin from card where pin= " + pin;
+        String query = "select number,pin,balance from card where pin= " + "'" + pin + "'";
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             cn = rs.getString("number");
             p = rs.getString("pin");
-//            while (rs.next()) {
-//                System.out.println(rs.getInt("id") +  "\t" +
-//                        rs.getString("name") + "\t" +
-//                        rs.getDouble("capacity"));
-//            }
+            b = rs.getInt("balance");
+
         } catch (SQLException e) {
-//            System.out.println(e.getMessage());
         }
-        return new Account(cn, p);
+        return new Account(cn, p, b);
     }
 
     static void insert(String fileName, String card, String pin) {
@@ -136,13 +132,26 @@ public class SimpleBanking {
         }
     }
 
+    static void closeAccount(String fileName, String pin) {
+        String url = "jdbc:sqlite:/home/mihey/Sqlite/" + fileName;
+        String query = "delete from card where pin= " + "'" + pin + "'";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(query);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     static final class Account {
         private final String cardNumber;
         private final String pin;
+        private int balance;
 
-        public Account(String cardNumber, String pin) {
+        public Account(String cardNumber, String pin, int balance) {
             this.cardNumber = cardNumber;
             this.pin = pin;
+            this.balance = balance;
         }
 
         public String getCardNumber() {
@@ -153,13 +162,14 @@ public class SimpleBanking {
             return pin;
         }
 
-        @Override
-        public String toString() {
-            return "Account{" +
-                    "cardNumber='" + cardNumber + '\'' +
-                    ", pin='" + pin + '\'' +
-                    '}';
+        public int getBalance() {
+            return balance;
         }
+
+        public void setBalance(int balance) {
+            this.balance = balance;
+        }
+
     }
 
     public static void main(String[] args) {
@@ -188,26 +198,61 @@ public class SimpleBanking {
                     String cn = sc.nextLine();
                     System.out.println("Enter your PIN:");
                     String p = sc.nextLine();
-                    Account a = select(db, p);
-//                    System.out.println(a.toString());
-                    if (validate(cn, a.getCardNumber(), p, a.getPin())) {
+                    Account account = select(db, p);
+                    if (validate(cn, account.getCardNumber(), p, account.getPin())) {
                         System.out.println("You have successfully logged in!\n");
                         balance();
                         answer = getAnswer();
-                        while (answer.equals("1")) {
-                            System.out.println("\nBalance: 0\n");
-                            balance();
-                            answer = getAnswer();
+                        boolean b = true;
+                        while (b) {
+                            switch (answer) {
+                                case("0"):
+                                    b=false;
+                                    break;
+                                case ("1"):
+                                    System.out.printf("\nBalance: %d\n\n", account.getBalance());
+                                    balance();
+                                    answer = getAnswer();
+                                    break;
+                                case ("2"):
+                                    System.out.println("Enter income: ");
+                                    int income = sc.nextInt();
+                                    System.out.println("Income was added!\n");
+                                    account.setBalance(account.getBalance() + income);
+                                    balance();
+                                    answer = getAnswer();
+                                    break;
+                                case ("3"):
+                                    System.out.println("Transfer\n" +
+                                            "Enter card number: ");
+                                    int transferCard = sc.nextInt();
+                                    System.out.println("Enter how much money you want to transfer: ");
+                                    int transfer = sc.nextInt();
+                                    if (transfer > account.getBalance()) {
+                                        System.out.println("Not enough money!\n");
+                                    } else {
+                                        System.out.println("Success!\n");
+                                        account.setBalance(account.getBalance() - transfer);
+                                    }
+                                    balance();
+                                    answer = getAnswer();
+                                    break;
+                                case ("4"):
+                                    closeAccount(db, account.getPin());
+                                    System.out.println("\nThe account has been closed!\n");
+                                    greet();
+                                    answer = getAnswer();
+                                    b = false;
+                                    break;
+                                case ("5"):
+                                    System.out.println("\nYou have successfully logged out!\n");
+                                    greet();
+                                    answer = getAnswer();
+                                    b = false;
+                                    break;
+                            }
                         }
-                        switch (answer) {
-                            case ("0"):
-                                break;
-                            case ("2"):
-                                System.out.println("\nYou have successfully logged out!\n");
-                                greet();
-                                answer = getAnswer();
-                                break;
-                        }
+
                     } else {
                         System.out.println("\nWrong card number or PIN!\n");
                         greet();
