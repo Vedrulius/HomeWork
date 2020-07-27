@@ -8,7 +8,7 @@ public class BuilderCar {
         System.out.println(audi);
     }
 }
-    enum TM {    // Transmision
+    enum TM {    // Transmission
         AT, MT;
     }
 
