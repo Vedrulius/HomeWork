@@ -6,7 +6,7 @@ public class Anon {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < repeats ; i++) {
+                for (int i = 0; i < repeats; i++) {
                     System.out.println(text);
                 }
             }
@@ -16,6 +16,6 @@ public class Anon {
     }
 
     public static void main(String[] args) {
-        createRunnable("!!!",3).run();
+        createRunnable("!!!", 3).run();
     }
 }
