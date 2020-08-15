@@ -84,22 +84,7 @@ public class PhoneBook {
         System.out.println("Enter index to show info: ");
         Scanner sc = new Scanner(System.in);
         int rec = sc.nextInt() - 1;
-        Contact c = list.get(rec);
-        if (c instanceof PersonContact) {
-            System.out.println("Name: " + ((PersonContact) c).getName());
-            System.out.println("Surname: " + ((PersonContact) c).getLastName());
-            System.out.println("Birth date: " + ((PersonContact) c).getBirthDate());
-            System.out.println("Gender: " + ((PersonContact) c).getGender());
-            System.out.println("Number: " + c.getPhoneNumber());
-            System.out.println("Time created: " + c.getTimeCreated().withNano(0).withSecond(0));
-            System.out.println("Time last edit: " + c.getTimeEdited().withNano(0).withSecond(0));
-        } else {
-            System.out.println("Organization name: " + ((Organization) c).getName());
-            System.out.println("Address: " + ((Organization) c).getAddress());
-            System.out.println("Number: " + c.getPhoneNumber());
-            System.out.println("Time created: " + c.getTimeCreated().withNano(0).withSecond(0));
-            System.out.println("Time last edit: " + c.getTimeEdited().withNano(0).withSecond(0));
-        }
+        System.out.println(list.get(rec).toString());
     }
 
     static void removingContact(List<Contact> list) {
@@ -333,8 +318,8 @@ class Organization extends Contact {
                 "Organization name: " + name + '\n' +
                         "Address: " + address + '\n' +
                         "Number: " + phoneNumber + '\n' +
-                        "Time created: " + timeCreated.withSecond(0).withNano(0)  + '\n' +
-                        "Time last edit: " + timeEdited.withSecond(0).withNano(0)  ;
+                        "Time created: " + timeCreated.withSecond(0).withNano(0) + '\n' +
+                        "Time last edit: " + timeEdited.withSecond(0).withNano(0);
     }
 }
 
@@ -392,13 +377,13 @@ class PersonContact extends Contact {
     @Override
     public String toString() {
         return
-                "Name: " + name  + '\n' +
+                "Name: " + name + '\n' +
                         "Surname: " + lastName + '\n' +
                         "Birth date: " + birthDate + '\n' +
                         "Gender: " + gender + '\n' +
                         "Number: " + phoneNumber + '\n' +
                         "Time created: " + timeCreated.withSecond(0).withNano(0) + '\n' +
-                        "Time last edit: " + timeEdited.withSecond(0).withNano(0) ;
+                        "Time last edit: " + timeEdited.withSecond(0).withNano(0);
     }
 }
 
