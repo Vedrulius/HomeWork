@@ -56,6 +56,34 @@ public class PhoneBook {
         }
     }
 
+    static void search(List<Contact> list) {
+        ArrayList<Contact> searchContact = new ArrayList<>();
+        int count = 0;
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        Pattern pattern = Pattern.compile(s.trim(), Pattern.CASE_INSENSITIVE);
+        for (Contact contact : list) {
+            if (contact instanceof PersonContact) {
+                String c = ((PersonContact) contact).getName() + ((PersonContact) contact).getLastName();
+                Matcher matcher = pattern.matcher(c);
+                if (matcher.find()) {
+                    searchContact.add(contact);
+                    count++;
+                }
+            } else {
+                String c = ((Organization) contact).getName() + ((Organization) contact).getAddress();
+                Matcher matcher = pattern.matcher(c);
+                if (matcher.find()) {
+                    searchContact.add(contact);
+                    count++;
+                }
+            }
+        }
+        System.out.printf("Found %d results:\n",count);
+        listingContact(searchContact);
+
+    }
+
     static void listingContact(List<Contact> list) {
         int count = 1;
         for (Contact contact : list) {
@@ -237,11 +265,11 @@ public class PhoneBook {
     }
 
     static String getAction() {
-        System.out.println("Enter action (add, remove, edit, count, info, exit): ");
+        System.out.println("[menu] Enter action (add, list, search, count, exit): ");
         Scanner scanner = new Scanner(System.in);
         String action = scanner.nextLine();
-        while (!action.matches("(add|remove|edit|count|info|exit)")) {
-            System.out.println("Enter action (add, remove, edit, count, info, exit): ");
+        while (!action.matches("(add|list|search|count|exit)")) {
+            System.out.println("[menu] Enter action (add, list, search, count, exit): ");
             action = scanner.nextLine();
         }
         return action;
