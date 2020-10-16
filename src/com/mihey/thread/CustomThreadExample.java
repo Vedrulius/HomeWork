@@ -1,20 +1,69 @@
 package com.mihey.thread;
 
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
 public class CustomThreadExample {
-    public static void main(String[] args) {
-        Thread t1 = new HelloThread(); // a subclass of Thread
+    public static void main(String[] args) throws InterruptedException {
 
-        Thread t2 = new Thread(new HelloRunnable()); // passing runnable
+        Counter counter = new Counter();
 
-        Thread myThread = new Thread(new HelloRunnable(), "my-thread");
+        MyThread thread1 = new MyThread(counter);
+        MyThread thread2 = new MyThread(counter);
+        thread1.start(); // start the first thread
+        thread1.join();  // wait for the first thread
 
-        Thread t3 = new Thread(() -> {
-            System.out.println(String.format("Hello, i'm %s", Thread.currentThread().getName()));
-        });
+        thread2.start(); // start the second thread
+        thread2.join();  // wait for the second thread
 
-        Thread t = new HelloThread(); // an object representing a thread
-        t.start();
+        System.out.println(counter.getValue()); // it prints 2
+    }
+}
 
+class Counter {
+
+    private int value = 0;
+
+    public void increment() {
+        value++;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
+
+class MyThread extends Thread {
+
+    private final Counter counter;
+
+    public MyThread(Counter counter) {
+        this.counter = counter;
+    }
+
+    @Override
+    public void run() {
+        counter.increment();
+    }
+}
+
+class SquareWorkerThread extends Thread {
+    private final Scanner scanner = new Scanner(System.in);
+
+    public SquareWorkerThread(String name) {
+        super(name);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            int number = scanner.nextInt();
+            if (number == 0) {
+                break;
+            }
+            System.out.println(number * number);
+        }
+        System.out.println(String.format("%s finished", getName()));
     }
 }
 
