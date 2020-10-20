@@ -1,7 +1,6 @@
-package com.mihey.jetbrains.simple_banking_system;
+package com.mihey.simple_banking_system;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 

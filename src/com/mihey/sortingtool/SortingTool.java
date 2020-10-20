@@ -1,4 +1,4 @@
-package com.mihey.jetbrains;
+package com.mihey.sortingtool;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,16 +6,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class SortingTool<T extends Comparable<? super T>> {
-//    private String returnType(String type) {
-//        if (type.contains("long")) {
-//            return "numbers";
-//        }
-//        if (type.contains("word")) {
-//            return "words";
-//        } else {
-//            return "lines";
-//        }
-//    }
 
     public void sortByCount(ArrayList<T> arrayList, String type) {
         HashMap<T, Integer> dataEntryToCount = new HashMap<>();
@@ -60,12 +50,11 @@ public class SortingTool<T extends Comparable<? super T>> {
         if (type.equals("line")) {
             System.out.println("Sorted data: ");
             arrayList.forEach(e -> System.out.println(e + " "));
-            System.out.println();
         } else {
             System.out.print("Sorted data: ");
             arrayList.forEach(e -> System.out.print(e + " "));
-            System.out.println();
         }
+        System.out.println();
     }
 
     public static void main(final String[] args) throws IOException {

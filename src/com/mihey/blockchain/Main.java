@@ -1,4 +1,4 @@
-package com.mihey.jetbrains.blockchain;
+package com.mihey.blockchain;
 
 import java.util.Scanner;
 
