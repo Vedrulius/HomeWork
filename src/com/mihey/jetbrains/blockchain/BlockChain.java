@@ -2,21 +2,25 @@ package com.mihey.jetbrains.blockchain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BlockChain {
     private List<Block> blockList;
-    private int numberOfZeros;
 
-    public BlockChain(int numberOfZeros) {
+    public BlockChain() {
         blockList = new ArrayList<>();
-        this.numberOfZeros = numberOfZeros;
     }
 
     public void addBlock() {
+        int threads=Runtime.getRuntime().availableProcessors();
+        ExecutorService executor= Executors.newFixedThreadPool(threads);
+        List<Callable<Block>> miners = new ArrayList<>();
         if (blockList.isEmpty()) {
-            blockList.add(new Block(null,numberOfZeros));
+            blockList.add(new Block(null));
         } else {
-            blockList.add(new Block(blockList.get(blockList.size() - 1),numberOfZeros));
+            blockList.add(new Block(blockList.get(blockList.size() - 1)));
         }
     }
 

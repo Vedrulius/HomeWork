@@ -1,16 +1,23 @@
 package com.mihey.jetbrains.blockchain;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        System.out.print("Enter how many zeros the hash must start with: ");
-        final int numberOfZeros = new Scanner(System.in).nextInt();
-        BlockChain blockChain = new BlockChain(numberOfZeros);
+
+        BlockChain blockChain = new BlockChain();
         for (int i = 0; i < 5; i++) {
             blockChain.addBlock();
         }
-        blockChain.getBlockList().forEach(System.out::println);
+        blockChain.getBlockList().forEach(x -> {
+            System.out.println(x);
+            if (x.getGenTime() > 60) {
+                System.out.println("N was decreased by 1");
+            } else if (x.getGenTime() < 10) {
+                System.out.println("N was increased to " + (x.getNumberOfZeros() + 1));
+            } else {
+                System.out.println("N stays the same");
+            }
+            System.out.println();
+        });
     }
 }
 

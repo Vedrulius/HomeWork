@@ -39,6 +39,7 @@ class AsyncMessageSenderImpl implements AsyncMessageSender {
 
                 executor.submit(() -> {
                     System.out.printf("(%s>%s): %s\n", msg.from, msg.to, msg.text); // do not change it
+                    System.out.println(Thread.currentThread().getName());
                 });
             }
         }
@@ -53,7 +54,7 @@ class AsyncMessageSenderImpl implements AsyncMessageSender {
 
 public class ExecutorExample {
     public static void main(String[] args) {
-        AsyncMessageSender sender = new AsyncMessageSenderImpl(3);
+        AsyncMessageSender sender = new AsyncMessageSenderImpl(5);
         Message[] messages = {
 
                 new Message("John", "Mary", "Hello!"),
