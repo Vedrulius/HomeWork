@@ -1,4 +1,4 @@
-package com.mihey.blockchain;
+package com.mihey.jetbrains.blockchain;
 
 import java.util.Date;
 import java.util.Random;

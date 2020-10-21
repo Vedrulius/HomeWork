@@ -1,4 +1,4 @@
-package com.mihey.jetbrains;
+package com.mihey.jetbrains.coffeemachine;
 
 import java.util.Scanner;
 

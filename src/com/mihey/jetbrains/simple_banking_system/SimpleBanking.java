@@ -1,4 +1,4 @@
-package com.mihey.simple_banking_system;
+package com.mihey.jetbrains.simple_banking_system;
 
 import java.sql.*;
 import java.util.Random;

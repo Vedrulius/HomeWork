@@ -1,4 +1,4 @@
-package com.mihey.jetbrains;
+package com.mihey.jetbrains.chatbot;
 
 import java.util.Scanner;
 

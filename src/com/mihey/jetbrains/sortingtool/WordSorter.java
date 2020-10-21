@@ -1,4 +1,4 @@
-package com.mihey.sortingtool;
+package com.mihey.jetbrains.sortingtool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
