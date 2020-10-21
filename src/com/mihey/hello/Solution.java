@@ -1,56 +1,36 @@
 package com.mihey.hello;
 
 
-import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class Solution {
-    public static void main(String[] args) {
-        LocalTime lt = LocalTime.of(20,0);
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        Map<String, LocalTime> map = new LinkedHashMap<>();
-        for (int i = 0; i < n; i++) {
-            map.put(sc.next(),LocalTime.parse(sc.next()));
-            sc.nextLine();
-        }
-        for (String s : map.keySet()) {
-            if(map.get(s).isAfter(lt)) {
-                System.out.println(s);
+class MapUtils {
+
+    public static SortedMap<String, Integer> wordCount(String[] strings) {
+        SortedMap<String,Integer> map = new TreeMap<>();
+
+        for (String s : strings) {
+            if(!map.containsKey(s)) {
+                map.put(s,1);
+            } else{
+                map.put(s,map.get(s)+1);
             }
         }
+        return Arrays.stream(strings).collect(Collectors.toMap(s -> s, s -> 1, Integer::sum, TreeMap::new));
     }
+
+    public static void printMap(Map<String, Integer> map) {
+        map.forEach((key,value)-> System.out.println(key + ": " + value));
+    }
+
 }
-class ComplexNumber {
 
-    private final double re;
-    private final double im;
-
-    public ComplexNumber(double re, double im) {
-        this.re = re;
-        this.im = im;
-    }
-
-    public double getRe() {
-        return re;
-    }
-
-    public double getIm() {
-        return im;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ComplexNumber that = (ComplexNumber) o;
-        return Double.compare(that.re, re) == 0 &&
-                Double.compare(that.im, im) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(re, im);
+/* Do not change code below */
+public class Solution {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] words = scanner.nextLine().split(" ");
+        MapUtils.printMap(MapUtils.wordCount(words));
     }
 }
 

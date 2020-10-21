@@ -11,7 +11,7 @@ public class Block {
     private String previousHash;
     private String hash;
 
-    public Block(Block prevBlock) {
+    public Block(Block prevBlock, int numberOfZeros) {
         if (prevBlock == null) {
             id = 1;
             previousHash = "0";
@@ -20,7 +20,7 @@ public class Block {
             previousHash = prevBlock.getHash();
         }
         timeStamp = new Date().getTime();
-        hash = calculateHash();
+        hash = mineBlock(numberOfZeros);
     }
 
     public int getId() {
@@ -36,14 +36,20 @@ public class Block {
                 .applySha256(previousHash + id + timeStamp + magicNumber);
     }
 
-    private String mineBlock(int prefix) {
-        Random r = new Random();
-        String prefixString = new String(new char[prefix]).replace('\0', '0');
-        while (!hash.substring(0, prefix).equals(prefixString)) {
-            magicNumber=r.nextInt(100_000_000);
-            hash = getHash();
+    private String mineBlock(int numberOfZeros) {
+        System.out.println(timeStamp);
+        hash = calculateHash();
+        if (numberOfZeros == 0) {
+            genTime = new Date().getTime() - timeStamp;
+            return hash;
         }
-        genTime = new Date().getTime() - timeStamp;
+        Random r = new Random();
+        String prefixString = new String(new char[numberOfZeros]).replace('\0', '0');
+        while (!hash.substring(0, numberOfZeros).equals(prefixString)) {
+            magicNumber = r.nextInt(99_999_999);
+            hash = calculateHash();
+        }
+        genTime = (new Date().getTime() - timeStamp) / 1000;
         return hash;
     }
 
@@ -55,6 +61,6 @@ public class Block {
                 "Magic number:" + magicNumber + "\n" +
                 "Hash of the previous block: \n" + previousHash + "\n" +
                 "Hash of the block: \n" + hash + "\n" +
-                "Block was generating for " + genTime/1000 + " seconds" + "\n";
+                "Block was generating for " + genTime + " seconds" + "\n";
     }
 }
